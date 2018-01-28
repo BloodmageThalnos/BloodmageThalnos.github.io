@@ -1,29 +1,45 @@
 @import 'libs/vars';
 @import 'libs/functions';
 @import 'libs/mixins';
+@import 'libs/skel';
 
 /*
-	Big Picture by HTML5 UP
+	Editorial by HTML5 UP
 	html5up.net | @ajlkn
 	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
 */
 
-/* Loader */
+/* Features */
 
-	body {
-		&:before,
+	.features {
 		&:after {
-			display: none !important;
+			clear: both;
+			content: '';
+			display: block;
+		}
+
+		article {
+			float: left;
+
+			&:after {
+				clear: both;
+				content: '';
+				display: block;
+			}
+
+			.icon {
+				float: left;
+			}
 		}
 	}
 
-/* Gallery */
+/* Posts */
 
-	.gallery {
+	.posts {
 		&:after {
+			clear: both;
 			content: '';
 			display: block;
-			clear: both;
 		}
 
 		article {
@@ -33,22 +49,36 @@
 
 /* Main */
 
-	.main {
-		&.fullscreen {
-			min-height: 0;
-		}
-
-		&.style1 {
-			> .content {
-				margin: 0 auto;
-			}
-		}
+	#main {
+		padding-left: _size(sidebar-width-alt);
 	}
 
-/* Poptrox */
+/* Sidebar */
 
-	.poptrox-popup {
-		.loader {
-			display: none !important;
+	#sidebar {
+		position: absolute;
+		top: 0;
+		left: 0;
+		min-height: 100%;
+		width: _size(sidebar-width-alt);
+	}
+
+/* Banner */
+
+	#banner {
+		&:after {
+			clear: both;
+			content: '';
+			display: block;
+		}
+
+		.content {
+			float: left;
+			padding-right: (_size(element-margin) * 2);
+		}
+
+		.image {
+			float: left;
+			margin-left: 0;
 		}
 	}
