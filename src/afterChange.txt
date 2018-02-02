@@ -1,0 +1,33 @@
+#include&lt;cstdio&gt;
+#include&lt;cstdlib&gt;
+#include&lt;cstring&gt;
+#include&lt;algorithm&gt;
+using namespace std;
+int edge[510][510], vis[510], con, N, M, f, t;
+void dfs(int x){
+	vis[x]=1;
+	for(int i=1; i&lt;=N; i++)if(edge[x][i]){
+		if(!vis[i])dfs(i);
+		else if(vis[i]==1)con++;
+		if(con&gt;=2)break;
+	}
+	vis[x]=2;
+}
+int main(){
+	scanf(&quot;%d%d&quot;,&amp;N,&amp;M);
+	for(int i=1; i&lt;=M; i++){
+	    scanf(&quot;%d%d&quot;,&amp;f,&amp;t);
+		edge[f][t]=1;
+	}
+	for(int i=1; i&lt;=N; i++){
+		con=0;
+		memset(vis, 0, sizeof vis);
+		dfs(i);
+		for(int j=1; j&lt;=N; j++)if(j!=i){
+			if(!vis[j])dfs(j);
+			if(con&gt;=2)break;
+		}
+		if(con&lt;=1)return puts(&quot;YES&quot;), 0;
+	}
+	return puts(&quot;NO&quot;), 0;
+}

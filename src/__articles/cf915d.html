@@ -24,10 +24,209 @@
             </p>
             <h2>有向图判环</h2>
             <p>
-                如果一张有向图中没有环，那它顾名思义就是一张有向无环图。而有向无环图具有许多优秀的性质，比如说我们可以对图进行<a href="https://en.wikipedia.org/wiki/Topological_sorting">拓扑排序</a>。简单地说，我们可以将图的所有节点放进一个小顶堆中，按照顶点的入度排序。每次取出入度为0的一个顶点并记录，然后将从该点出发的所有边能够到达的点的入度减一；如果重复一直到所有点都被取出，则拓扑排序完成，如果某一次循环后发现没有入度为0的点，那么剩下的所有点一定构成了若干个环，或者说属于若干个强联通分量。这个算法的复杂度是O(M*log N)，假如我们的小顶堆是用二叉堆来实现的。<br />
-                我们当然也可以使用<a href="https://en.wikipedia.org/wiki/Depth-first_search">深度优先搜索</a>来判断一个有向图是否有环。先任取一个顶点，从该顶点开始进行dfs，每次经过一个节点都将该节点标记为“已经被经过了”。如果发现当前节点出发有一条边连向一个已经被经过了的点，那么我们就发现了一个环。一次dfs结束后，如果没有发现环，由于图未必联通，再要任取一个没有被经过过的点进行一次dfs，直到每个点都被经过了。如果发现的环的数量为0，那么就说明图中不存在环。如果采用邻接表的形式存储图，复杂度是O(M+N)，而如果采用邻接矩阵的形式，复杂度是O(N^2)的。
+                一般来说，我们可以使用<a href="https://en.wikipedia.org/wiki/Depth-first_search">深度优先搜索</a>来判断一个有向图是否有环。先任取一个顶点，从该顶点开始进行dfs，每次经过一个节点都将该节点标记为“正在被遍历”。如果发现当前节点出发有一条边连向一个“正在被遍历”的点，那么我们就发现了一个环；当一个节点回溯的时候，说明它所在生成树的子树已经完全被遍历过了，那么我们把它重新标记为“已经结束遍历”状态。一次dfs结束后，如果没有发现环，由于图未必联通，再要任取一个没有被经过过的点进行一次dfs，直到每个点都被经过了。如果没有发现任何环，那么就说明图中不存在环。如果采用邻接表的形式存储图，复杂度是O(M+N)，而如果采用邻接矩阵的形式，复杂度是O(N^2)的。
             </p>
-            
+            <p>
+                此外，如果一张有向图中没有环，那它顾名思义就是一张有向无环图。而有向无环图具有许多优秀的性质，比如说我们可以对图进行<a href="https://en.wikipedia.org/wiki/Topological_sorting">拓扑排序</a>。对一张图进行拓扑排序有两种经典的算法，一种是利用优先队列或者栈来实现，可以参考<a href="http://blog.csdn.net/fisher_jiang/article/details/941234">这个博客</a>；另一种则是利用深度优先搜索的回溯，在《算法导论》中有详细的介绍。简单地说，就是任取一个点进行一次dfs，在回溯的时候记录每个点返回的时间，然后倒着排序一下就可以得到拓扑序了。当然在这道题里，也同样需要多次dfs直到所有点都被经过过为止，因为图未必联通。这个算法的复杂度是O(M+N)。
+            </p>
+            <h2>两种尝试</h2>
+            <p>
+                回到刚才的问题，我们能不能继续沿用上面的算法呢？读到这里，相信读者容易想到一个朴素、暴力的想法：枚举每一条边，判断删除该边后的图是不是有向无环图。但是，在最坏的情况下这个算法的时间复杂度是O(M*(M+N))，显然不足以通过本题的时间限制。
+            </p>
+            <p>
+                这个思路并不是走不通。事实上，我们可以在使用第一个算法的时候，保存下图中出现的第一个环的所有边。实现方式是同时用一个栈维护当前dfs的路径上的边，在第一次发现返祖边（也就是连向一个“正在被遍历”的点的边）的时候，找到这条边将路径上切割出的那个环，也就是不断出栈直到栈顶节点与当前节点相同。那么这些节点就构成了一个环。
+                在dfs结束后，如果没有找到一个环，那么这张图直接就符合条件；否则，删除的边一定是这个环上的一条边（否则不可能形成无环图）。因此枚举环上的每一条边，判断删除该边后的图是不是有向无环图即可。复杂度为O(N*(N+M))，因为环上至多有N条边。
+                具体AC代码在最后贴出。
+            </p>
+            <p>
+                另一种想法是改造算法。我们回想刚才的第二个算法，如果对一个有环的图使用这种拓扑排序的dfs会怎么样？dfs的时候就会无限递归爆栈。检测是否无限递归显然不行，但是我们可以少许改造一下dfs的顺序，使得当一个点在最后一次被访问的时候才进入递归；对于有向无环图，这样的改造是没有问题的，只是本来是第一次路过家门的时候进去，以后在路过就不进了；现在是最后一次路过家门（第d[i]次路过家门，d[i]表示i点的入度）的时候进去。但是对于有环的图，经过这样的改造以后就永远进不了递归了。这样只要再对进了递归的点进行一下计数，看最后进入递归的点数是否等于N即可。
+                具体细节详见代码。
+            </p>
+            <h2>殊途同归</h2>
+            <p>
+                懒得写了！！！！以后有机会补。反正还有第三种非常炫酷的做法，<b>talk is easy, i show you the code.</b>
+            </p>
+            <h2>AC代码</h2>
+            <h4>第一种做法</h4>
+            <pre><code>#include &lt;iostream&gt;
+#include &lt;vector&gt;
+#include &lt;cmath&gt;
+#include &lt;algorithm&gt;
+using namespace std;
+typedef long long ll;
+
+int n, m;
+vector&lt;vector&lt;int&gt;&gt; g;
+vector&lt;int&gt; used2;
+
+bool flag = false, f = false;
+int u;
+vector&lt;pair&lt;int, int&gt;&gt; e;
+
+void dfs1(int v) {
+	used2[v] = 1;
+	for (int i = 0; i &lt; g[v].size(); i++) {
+		int to = g[v][i];
+		if (used2[to] == 1) {
+			flag = true;
+			u = to;
+			e.emplace_back(v, to);
+				return;
+		}
+		else {
+			if (used2[to] == 0) {
+				dfs1(to);
+				if (f) {
+					return;
+				}
+				if (flag) {
+					e.emplace_back(v, to);
+					if (u == v) {
+						f = true;
+					}
+					return;
+				}
+			}
+		}
+	}
+	used2[v] = 2;
+}
+
+
+bool ans = false, n_f = false;
+int x, y;
+
+void dfs2(int v) {
+	used2[v] = 1;
+	for (int i = 0; i &lt; g[v].size(); i++) {
+		int to = g[v][i];
+		if (used2[to] == 1 &amp;&amp; !(x == v &amp;&amp; y == to)) {
+			n_f = true;
+		}
+		if (used2[to] == 0 &amp;&amp; !(x == v &amp;&amp; y == to)) {
+			dfs2(to);
+		}
+	}
+	used2[v] = 2;
+}
+
+int main() {
+	ios_base::sync_with_stdio(0);
+	cin.tie(0);
+	cout.tie(0);
+	cin &gt;&gt; n &gt;&gt; m;
+	g.assign(n + 1, vector&lt;int&gt;());
+	for (int i = 0; i &lt; m; i++) {
+		int v, u;
+		cin &gt;&gt; v &gt;&gt; u;
+		g[v].push_back(u);
+	}
+	used2.assign(n + 1, 0);
+
+	for (int i = 1; i &lt;= n; i++) {
+		if (used2[i] == 0) {
+			dfs1(i);
+		}
+	}
+
+	for (int i = 0; i &lt; e.size(); i++) {
+		n_f = false;
+		used2.assign(n + 1, 0);
+		x = e[i].first;
+		y = e[i].second;
+		for (int i = 1; i &lt;= n; i++) {
+			if (!used2[i]) {
+				dfs2(i);
+			}
+		}
+		if (!n_f) {
+			cout &lt;&lt; &quot;YES&quot;;
+			return 0;
+		}
+	}
+	if (e.size() == 0) {
+		cout &lt;&lt; &quot;YES&quot;;
+	}
+	else {
+		cout &lt;&lt; &quot;NO&quot;;
+	}
+}
+            </code></pre>
+            <h4>第二种做法（来自@ytz123）</h4>
+            <pre><code>#include &lt;bits/stdc++.h&gt;
+
+#define rep(i, j, k) for (int i = j; i &lt; k; i ++)
+
+using namespace std;
+
+const int N = 510;
+
+int n, m, c, e[N][N], d[N], g[N], vis[N];
+
+void dfs(int u) {
+    vis[u] = 1, c --;
+    rep (i, 1, n + 1)
+        if (!vis[i] &amp;&amp; e[u][i])
+            if ((-- d[i]) &lt;= 0) dfs(i);
+}
+
+int main() {
+    ios::sync_with_stdio(false);
+    cin &gt;&gt; n &gt;&gt; m;
+    int u, v;
+    rep (i, 0, m) {
+        cin &gt;&gt; u &gt;&gt; v;
+        e[u][v] = 1, g[v] ++;
+    } 
+    rep (i, 1, n + 1) {
+        rep (j, 1, n + 1)
+            d[j] = g[j], vis[j] = 0;
+        d[i] --, c = n;
+        rep (j, 1, n + 1)
+            if (d[j] &lt;= 0 &amp;&amp; !vis[j])
+                dfs(j);
+        if (!c) {
+            puts(&quot;YES&quot;);
+            return 0;
+        }
+    }
+    puts(&quot;NO&quot;);
+}
+            </code></pre>
+            <h4>第三种做法</h4>
+            <pre><code>#include&lt;cstdio&gt;
+#include&lt;cstdlib&gt;
+#include&lt;cstring&gt;
+#include&lt;algorithm&gt;
+using namespace std;
+int edge[510][510], vis[510], con, N, M, f, t;
+void dfs(int x){
+	vis[x]=1;
+	for(int i=1; i&lt;=N; i++)if(edge[x][i]){
+		if(!vis[i])dfs(i);
+		else if(vis[i]==1)con++;
+		if(con&gt;=2)break;
+	}
+	vis[x]=2;
+}
+int main(){
+	scanf(&quot;%d%d&quot;,&amp;N,&amp;M);
+	for(int i=1; i&lt;=M; i++){
+	    scanf(&quot;%d%d&quot;,&amp;f,&amp;t);
+		edge[f][t]=1;
+	}
+	for(int i=1; i&lt;=N; i++){
+		con=0;
+		memset(vis, 0, sizeof vis);
+		dfs(i);
+		for(int j=1; j&lt;=N; j++)if(j!=i){
+			if(!vis[j])dfs(j);
+			if(con&gt;=2)break;
+		}
+		if(con&lt;=1)return puts(&quot;YES&quot;), 0;
+	}
+	return puts(&quot;NO&quot;), 0;
+}</code></pre>
         </section>
     </div>
 </div>
