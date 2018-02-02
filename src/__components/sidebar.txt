@@ -11,15 +11,14 @@
                 <h2>文章列表</h2>
             </header>
             <ul>
-                <li><a href="page01.html">测试页面1</a></li>
-                <li><a href="page02.html">测试页面2</a></li>
+                <li><a href="cf915d.html">【图论】有向图的深度优先搜索与判环</a></li>
                 <li>
                     <span class="opener">ACM解题报告</span>
                     <ul>
-                        <li><a href="page03.html">测试页面3</a></li>
-                        <li><a href="#">Ipsum Adipiscing</a></li>
-                        <li><a href="#">Tempus Magna</a></li>
-                        <li><a href="#">Feugiat Veroeros</a></li>
+                        <li><a href="">Aodacat Flying</a></li>
+                        <li><a href="">Ipsum Adipiscing</a></li>
+                        <li><a href="">Tempus Magna</a></li>
+                        <li><a href="">Feugiat Veroeros</a></li>
                     </ul>
                 </li>
                 <li><a href="#">Etiam Dolore</a></li>
@@ -54,7 +53,7 @@
                 </article>
                 <article>
                     <a href="#" class="image"><img src="images/pic09.jpg" alt="" /></a>
-                    <p>Aenean ornare velit lacus, ac varius enim lorem ullamcorper dolore aliquam.</p>
+                    <p>虚位以待。</p>
                 </article>
             </div>
             <ul class="actions">
@@ -66,11 +65,11 @@
             <header class="major">
                 <h2>联系方式</h2>
             </header>
-            <p>Sed varius enim lorem ullamcorper dolore aliquam aenean ornare velit lacus, ac varius enim lorem ullamcorper dolore. Proin sed aliquam facilisis ante interdum. Sed nulla amet lorem feugiat tempus aliquam.</p>
+            <p>如果你有什么问题、意见或者建议，随时欢迎和我发邮件联系！如果对我在博客中提到的项目源码感兴趣，可以去我的github主页看看。</p>
             <ul class="contact">
-                <li class="fa-envelope-o"><a href="mailto:cy1818cy@bupt.edu.cn?subject='from iHello.world'">cy1818cy@bupt.edu.cn</a></li>
-                <li class="fa-qq"> 2446629225 </li>
-                <li class="fa-mobile"> +86 18810339563 </li>
+                <li class="fa-envelope-o">Mail: <a href="mailto:cy1818cy@bupt.edu.cn?subject='from iHello.world'">cy1818cy@bupt.edu.cn</a></li>
+                <li class="fa-qq">QQ: 2446629225</li>
+                <li class="fa-train">Github: <a href="https://github.com/BloodmageThalnos">BloodmageThalnos</a></li>
             </ul>
         </section>
 

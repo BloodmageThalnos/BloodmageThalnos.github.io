@@ -1,0 +1,137 @@
+﻿<!DOCTYPE HTML>
+<html>
+	<head>
+		<title>iHello | 我的个人主页</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+		<!--[if lte IE 8]><script src="assets/js/ie/html5shiv.js"></script><![endif]-->
+		<link rel="stylesheet" href="assets/css/main.css" />
+		<!--[if lte IE 9]><link rel="stylesheet" href="assets/css/ie9.css" /><![endif]-->
+		<!--[if lte IE 8]><link rel="stylesheet" href="assets/css/ie8.css" /><![endif]-->
+	</head>
+	<body>
+		<div id="wrapper">﻿<div id="main">
+    <div class="inner">
+        <header id="header">
+            <a href="index.html" class="logo"><strong>iHello, my World!</strong></a>
+        </header>
+            
+        <section>
+            <header class="main">
+                <h1>【图论】有向图的深度优先搜索与判环</h1>
+            </header>
+            <h2>引出</h2>
+            <p>
+                最近在Codeforces上做了一场Educational Contest，确实学到了一些新东西，对以前觉得比较玄学的关于<b>有向图的深度优先搜索</b>有了一些新的认识。我们先来看题。<br />
+                <a href="http://codeforces.com/contest/915/problem/D">题目链接</a><
+            </p>
+            <h2>题意</h2>
+            <p>
+                给定一张有向图，如果可以任意删去图中的一条边，问是否可以得到一张有向无环图（DAG）。<br />
+                原图不一定联通，得到的图也不一定要联通。原图中可能出现重边、自环（也算作环）。<br />
+                数据范围：点数N ≤ 500，边数M ≤ 10 0000，时间限制1秒。
+            </p>
+            <p>
+                这个问题看上去简洁小巧，最终得到的程序也是精炼优美，但是中间的思考过程比较复杂。我们不妨先从有向图判环的问题开始说起。
+            </p>
+            <h2>有向图判环</h2>
+            <p>
+                如果一张有向图中没有环，那它顾名思义就是一张有向无环图。而有向无环图具有许多优秀的性质，比如说我们可以对图进行<a href="https://en.wikipedia.org/wiki/Topological_sorting">拓扑排序</a>。简单地说，我们可以将图的所有节点放进一个小顶堆中，按照顶点的入度排序。每次取出入度为0的一个顶点并记录，然后将从该点出发的所有边能够到达的点的入度减一；如果重复一直到所有点都被取出，则拓扑排序完成，如果某一次循环后发现没有入度为0的点，那么剩下的所有点一定构成了若干个环，或者说属于若干个强联通分量。这个算法的复杂度是O(M*log N)，假如我们的小顶堆是用二叉堆来实现的。<br />
+                我们当然也可以使用<a href="https://en.wikipedia.org/wiki/Depth-first_search">深度优先搜索</a>来判断一个有向图是否有环。先任取一个顶点，从该顶点开始进行dfs，每次经过一个节点都将该节点标记为“已经被经过了”。如果发现当前节点出发有一条边连向一个已经被经过了的点，那么我们就发现了一个环。一次dfs结束后，如果没有发现环，由于图未必联通，再要任取一个没有被经过过的点进行一次dfs，直到每个点都被经过了。如果发现的环的数量为0，那么就说明图中不存在环。如果采用邻接表的形式存储图，复杂度是O(M+N)，而如果采用邻接矩阵的形式，复杂度是O(N^2)的。<br />到这一步我们不难想到一个很暴力的解决办法：枚举每一条边，判断删除这条边以后的图是不是dag。在最坏的情况下，这个算法的复杂度是O(M*N^2)，绝对超过了本题的时间限制。
+            </p>
+                
+      
+            
+        </section>
+    </div>
+</div>
+﻿<div id="sidebar">
+    <div class="inner">
+        <section id="search" class="alt">
+            <form onsubmit="alert('啊哈，搜索功能还没做！');return false;">
+                <input type="text" name="query" placeholder="在标签中搜索" />
+            </form>
+        </section>
+
+        <nav id="menu">
+            <header class="major">
+                <h2>文章列表</h2>
+            </header>
+            <ul>
+                <li><a href="cf915d.html">【图论】有向图的深度优先搜索与判环</a></li>
+                <li>
+                    <span class="opener">ACM解题报告</span>
+                    <ul>
+                        <li><a href="">Aodacat Flying</a></li>
+                        <li><a href="">Ipsum Adipiscing</a></li>
+                        <li><a href="">Tempus Magna</a></li>
+                        <li><a href="">Feugiat Veroeros</a></li>
+                    </ul>
+                </li>
+                <li><a href="#">Etiam Dolore</a></li>
+                <li><a href="#">Adipiscing</a></li>
+                <li>
+                    <span class="opener">Another Submenu</span>
+                    <ul>
+                        <li><a href="#">Lorem Dolor</a></li>
+                        <li><a href="#">Ipsum Adipiscing</a></li>
+                        <li><a href="#">Tempus Magna</a></li>
+                        <li><a href="#">Feugiat Veroeros</a></li>
+                    </ul>
+                </li>
+                <li><a href="#">Maximus Erat</a></li>
+                <li><a href="#">Sapien Mauris</a></li>
+                <li><a href="#">Amet Lacinia</a></li>
+            </ul>
+        </nav>
+
+        <section>
+            <header class="major">
+                <h2>友情链接</h2>
+            </header>
+            <div class="mini-posts">
+                <article>
+                    <a href="http://codeforces.com" class="image"><img src="images/friend_01.jpg" alt="" /></a>
+                    <p>Codeforces，每周举办高质量的算法比赛，同时承办许多国外知名企业举办的算法竞赛，算法爱好者的交流学习基地。</p>
+                </article>
+                <article>
+                    <a href="https://github.com" class="image"><img src="images/friend_02.jpg" alt="" /></a>
+                    <p>Github，一个面向开源及私有软件项目的托管平台，在此可以十分轻易地找到海量的开源代码，并与全球程序员合作开发。</p>
+                </article>
+                <article>
+                    <a href="#" class="image"><img src="images/pic09.jpg" alt="" /></a>
+                    <p>虚位以待。</p>
+                </article>
+            </div>
+            <ul class="actions">
+                <li><a href="#" class="button">More</a></li>
+            </ul>
+        </section>
+
+        <section>
+            <header class="major">
+                <h2>联系方式</h2>
+            </header>
+            <p>如果你有什么问题、意见或者建议，随时欢迎和我发邮件联系！如果对我在博客中提到的项目源码感兴趣，可以去我的github主页看看。</p>
+            <ul class="contact">
+                <li class="fa-envelope-o">Mail: <a href="mailto:cy1818cy@bupt.edu.cn?subject='from iHello.world'">cy1818cy@bupt.edu.cn</a></li>
+                <li class="fa-qq">QQ: 2446629225</li>
+                <li class="fa-train">Github: <a href="https://github.com/BloodmageThalnos">BloodmageThalnos</a></li>
+            </ul>
+        </section>
+
+        <footer id="footer">
+            <p class="copyright">&copy;2018-2030 by 程元. All rights reserved. Demo Images: <a href="https://unsplash.com">Unsplash</a>. Design: <a href="https://html5up.net">HTML5 UP</a>.</p>
+        </footer>
+    </div>
+</div>
+        ﻿			</div>
+
+        <script src="assets/js/jquery.min.js"></script>
+        <script src="assets/js/skel.min.js"></script>
+        <script src="assets/js/util.js"></script>
+        <!--[if lte IE 8]><script src="assets/js/ie/respond.min.js"></script><![endif]-->
+        <script src="assets/js/main.js"></script>
+        <script src="assets/js/my.js"></script>
+	</body>
+</html>
