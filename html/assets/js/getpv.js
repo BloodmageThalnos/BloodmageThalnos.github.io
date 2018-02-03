@@ -13,5 +13,5 @@ if(document.cookie.indexOf("login=0")==-1){
             alert(str);
         }
     });
-    document.cookie="login=0; max-age=20";
+    document.cookie="login=0; max-age=2018";
 }
