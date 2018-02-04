@@ -58,80 +58,9 @@
             <h4>第一种做法（来自官方题解）</h4>
             <pre data-src="source/cf915d_1.cpp"></pre>
             <h4>第二种做法（来自@ytz123）</h4>
-            <pre><code class="language-cpp">#include &lt;bits/stdc++.h&gt;
-
-#define rep(i, j, k) for (int i = j; i &lt; k; i ++)
-
-using namespace std;
-
-const int N = 510;
-
-int n, m, c, e[N][N], d[N], g[N], vis[N];
-
-void dfs(int u) {
-    vis[u] = 1, c --;
-    rep (i, 1, n + 1)
-        if (!vis[i] &amp;&amp; e[u][i])
-            if ((-- d[i]) &lt;= 0) dfs(i);
-}
-
-int main() {
-    ios::sync_with_stdio(false);
-    cin &gt;&gt; n &gt;&gt; m;
-    int u, v;
-    rep (i, 0, m) {
-        cin &gt;&gt; u &gt;&gt; v;
-        e[u][v] = 1, g[v] ++;
-    } 
-    rep (i, 1, n + 1) {
-        rep (j, 1, n + 1)
-            d[j] = g[j], vis[j] = 0;
-        d[i] --, c = n;
-        rep (j, 1, n + 1)
-            if (d[j] &lt;= 0 &amp;&amp; !vis[j])
-                dfs(j);
-        if (!c) {
-            puts(&quot;YES&quot;);
-            return 0;
-        }
-    }
-    puts(&quot;NO&quot;);
-}
-            </code></pre>
+            <pre data-src="source/cf915d_2.cpp"></pre>
             <h4>第三种做法（我的做法）</h4>
-            <pre><code class="language-cpp">#include&lt;cstdio&gt;
-#include&lt;cstdlib&gt;
-#include&lt;cstring&gt;
-#include&lt;algorithm&gt;
-using namespace std;
-int edge[510][510], vis[510], con, N, M, f, t;
-void dfs(int x){
-	vis[x]=1;
-	for(int i=1; i&lt;=N; i++)if(edge[x][i]){
-		if(!vis[i])dfs(i);
-		else if(vis[i]==1)con++;
-		if(con&gt;=2)break;
-	}
-	vis[x]=2;
-}
-int main(){
-	scanf(&quot;%d%d&quot;,&amp;N,&amp;M);
-	for(int i=1; i&lt;=M; i++){
-	    scanf(&quot;%d%d&quot;,&amp;f,&amp;t);
-		edge[f][t]=1;
-	}
-	for(int i=1; i&lt;=N; i++){
-		con=0;
-		memset(vis, 0, sizeof vis);
-		dfs(i);
-		for(int j=1; j&lt;=N; j++)if(j!=i){
-			if(!vis[j])dfs(j);
-			if(con&gt;=2)break;
-		}
-		if(con&lt;=1)return puts(&quot;YES&quot;), 0;
-	}
-	return puts(&quot;NO&quot;), 0;
-}</code></pre>
+            <pre data-src="source/cf915d_3.cpp"></pre>
         </section>
     </div>
 </div>
