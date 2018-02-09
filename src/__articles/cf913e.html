@@ -14,7 +14,7 @@
                 <a href="http://codeforces.com/contest/913/problem/E">题目链接</a><
             </p>
             <h2>题意</h2>
-            <span class="image right"><img src="images/cf913e_1.jpg"/></span>
+            <span class="image right"><img src="../images/cf913e_1.jpg"/></span>
             <p>
                 输入第一行是测试数据组数，然后每行输入一串数表示一个<b>真值表</b>。对于每个真值表，要求输出所有符合这个真值表的逻辑表达式中，长度最小、长度相等时字典序最小的那个。<br />
                 举个例子，比如输入 00000111，就表示右图这个真值表（输入的是右边一列从上到下）。我们要找到一个由<b>xyz、与或非、括号</b>构成的合法的逻辑表达式，且符合这个真值表。比如x&amp;(y|z)，(y|z)&amp;x或者!(!x|!y&amp;!z)这些都符合条件。然后在它们中选择并输出<b>长度最小、长度相等时字典序最小</b>的那个，比如这个例子中输出应为 (y|z)&amp;x。<br />
@@ -47,8 +47,7 @@
                 具体实现细节可以参考下面的代码。
             </p>
             <h2>AC代码</h2>
-            <h4>我的做法</h4>
-            <pre class="line-numbers" data-src="source/cf913e.cpp" style="white-space:pre-swap;"></pre>
+            <pre class="line-numbers" data-src="../source/cf913e.cpp" style="white-space:pre-swap;"></pre>
         </section>
     </div>
 </div>

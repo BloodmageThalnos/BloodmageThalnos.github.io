@@ -47,7 +47,7 @@
                 上面列举了两种判断有向图是否有环的算法，并分别对他们进行了一些变换，得到了这道题的两种解法。我们不难发现，这两种方法虽然看上去很不相同，但是思想是一样的：枚举图中的一些元素（前者是某一个环上的边，后者是某个顶点的入度），判断图中变化该元素后是否变成了一个有向无环图，从而在原本O(N+M)的判定方法的基础上乘以了一个O(N)的复杂度，得到了O(N*(N+M))的结果。<br />
                 此外，这两种方法都用到了对有向图的<b>深度优先遍历</b>。在第一个方法中，第一次dfs用于寻找图中的一个环，第二次dfs维护每个点的经历情况，用于判环；第二个方法中的dfs经过了改造，只有在有向无环图中才能遍历所有节点，同样用于判环。但其实dfs的威力远远不止如此，在此题中，如果我们综合上面两种方法的思想，我们甚至可以直接通过一次dfs来得出结果。
             </p>
-            <span class="image right"><img src="images/cf915d_1.jpg"/></span>
+            <span class="image right"><img src="../images/cf915d_1.jpg"/></span>
             <p>
                 回想一下第一个算法的dfs过程。以这张图为例，假设我们选择点1为遍历的起始点，那么我们从1走到2，再从2走到3，再从3走到1。由于1是“正在被遍历”的点，我们就找到了一条返祖边(3,1)，也因此找到了一个环。那么问题来了，环上那么多条边，我们找到的返祖边是哪一条呢？显然是从最晚被经过的点，指向最早被经过的那个点的那条边。也就是说，起点选择不同，找到的返祖边就不同，比如如果以点2为起点遍历，最后找到的返祖边就会是(1,2)。<br />
                 我们再回想第二个算法，核心思想是枚举被删除的边复杂度太高，转而枚举被删除边的终点，也就是枚举(u,v)中的v点。那么这里我们也可以采用同样的思路。注意到题目的要求其实等价于“存在一条边被图中的所有环共用”，那么我们枚举这条边的终点，然后进行上述的dfs，可以发现每次找到的返祖边都是同一条。换句话说，如果存在一条边(u,v)使得删除该边后图中没有环了，那么我们从v点开始dfs，每次找到的返祖边都是(u,v)这条。<br />
@@ -56,11 +56,11 @@
             </p>
             <h2>AC代码</h2>
             <h4>第一种做法（来自官方题解）</h4>
-            <pre class="line-numbers" data-src="source/cf915d_1.cpp" style="white-space:pre-swap;"></pre>
+            <pre class="line-numbers" data-src="../source/cf915d_1.cpp" style="white-space:pre-swap;"></pre>
             <h4>第二种做法（来自@ytz123）</h4>
-            <pre class="line-numbers" data-src="source/cf915d_2.cpp" style="white-space:pre-swap;"></pre>
+            <pre class="line-numbers" data-src="../source/cf915d_2.cpp" style="white-space:pre-swap;"></pre>
             <h4>第三种做法（我的做法）</h4>
-            <pre class="line-numbers" data-src="source/cf915d_3.cpp" style="white-space:pre-swap;"></pre>
+            <pre class="line-numbers" data-src="../source/cf915d_3.cpp" style="white-space:pre-swap;"></pre>
         </section>
     </div>
 </div>
