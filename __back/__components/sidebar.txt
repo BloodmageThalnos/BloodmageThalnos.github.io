@@ -11,6 +11,8 @@
                 <h2>文章列表</h2>
             </header>
             <ul>
+                <li><a href="HunterVSHunter.html">猎人内战与一血反杀</a></li>
+                <li><a href="devcloud.html">在Intel DevCloud平台上搭建深度学习项目（一）</a></li>
                 <li><a href="cf915d.html">有向图判环算法的应用</a></li>
                 <li><a href="cf913e.html">贪心思想与最短路模型</a></li>
                 <li>
