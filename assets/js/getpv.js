@@ -1,6 +1,5 @@
 var url="https://cloud.bmob.cn/3aeb0ba8531e0e51/getPV";
-
-if(document.cookie.indexOf("login=0")==-1){
+!function(){if(document.cookie.indexOf("login=0")==-1){
     $.ajax({
         url:url,
         type:"GET",
@@ -14,4 +13,4 @@ if(document.cookie.indexOf("login=0")==-1){
         }
     });
     document.cookie="login=0; max-age=2018";
-}
+}}();

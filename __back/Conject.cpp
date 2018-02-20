@@ -34,7 +34,7 @@ int main(){
 	getFiles(path+arti, afiles);
 	for(auto file:afiles){
 		cout<<"Creating "<<file<<" from components."<<endl;
-		string code="copy /b "+path+comp+"head.txt+"+path+arti+file+"+"+path+comp+"sidebar.txt+"+path+comp+"tail.txt "+path+html+file;
+		string code="copy "+path+comp+"head.txt+"+path+arti+file+"+"+path+comp+"sidebar.txt+"+path+comp+"tail.txt "+path+html+file;
 		cout<<code<<endl;
 		system(code.c_str());
 		cout<<"Successful composing these files.";

@@ -1,4 +1,4 @@
-﻿<div id="sidebar">
+<div id="sidebar">
     <div class="inner">
         <section id="search" class="alt">
             <form onsubmit="alert('啊哈，搜索功能还没做！');return false;">
@@ -81,4 +81,3 @@
         </footer>
     </div>
 </div>
-        
