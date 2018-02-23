@@ -1,0 +1,4 @@
+# ignore background programs for various personal uses.
+# some of them have c++ source code in ./__back/
+
+/__back/*.exe
