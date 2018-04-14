@@ -19,38 +19,26 @@
             
         <section>
             <header class="main">
-                <h1>在Intel DevCloud平台上搭建深度学习项目（一）</h1>
+                <h1>Codeforces765E dfs</h1>
             </header>
-            <h2>Intel Caffe与Intel DevCloud</h2>
+            <h2>题意</h2>
             <p>
-                前段时间因为intel大赛的原因开始学深度学习，发现神经网络的训练实在非常消耗运算资源。在我自己的笔记本上开发深度学习项目的时候就常常受到运算速度的限制，虽然显卡支持cuda，但是gpu加速的效果也非常有限。英特尔提供了一种解决方案，就是只使用cpu的intel caffe（还有一个intel chainer，不过chainer网上学习资料有限，我就选择了caffe），在原来的caffe的基础上面向cpu做了一些优化，尤其是在英特尔的服务器上跑的快很多。<br />
-                Intel®Nervana™ DevCloud 是英特尔提供的一个免费云计算服务器，拥有非常强力的计算资源（260 TFLOP/s of machine learning performance）。对于深度学习的开发来说，上面预装了python、c++等环境、绝大部分深度学习程序需要的库，包括intel caffe和chainer，网速也很快。目前好像比较低调，没有公开的宣传，但是可以免费申请使用。
+                题意：每次从一棵树中找两根长度相同、起点相同的直链并删去其中一根。重复这个操作，求可以得到的最短直链的长度。如果无法得到直链，输出-1。<br />
+                需要注意的是树即使已经被删成直链了，如果长度是偶数还可以继续删的。 
             </p>
-            <h2>配置过程</h2>
+            <h2>思路</h2>
             <p>
-                首先得有访问intel devcloud的资格，截至目前在官网上的说法是对Intel AI Academy成员开放。注册intel官网账号后进入<a href="https://software.intel.com/zh-cn/ai-academy/tools/devcloud">这个网址</a>，点击“请求访问”就可以申请访问。<br />
-                <span class="image fit"><img src="../images/devcloud_01.jpg"/></span>
+                问题的关键是找到树中的“特殊点”，也就是我上面的图中的所有红点。“特殊点”的特点是它的度>2，且与它相连的直链长度不全相等，即以它为起点，不经过其他度>2的点，到达叶子节点的路径有至少两条，且长度不全相等。<br />
+                容易看出：若特殊点超过1个，结果必是-1；如果上述路径有三种及以上的长度，结果也是-1。不然，结果就是这两种长度之和，然后再除2直到不为偶数。 <br />
+                看出这个结论后就非常简单了：先对任一点建dfs树，用set存起每个点的节点的返回值，如果set.size>=3直接-1，如果==2就说明这个点是特殊点，再以这个点为起点建树做一遍。如果==1说明是普通点，直接+1返回上一层。 <br />
+                此外还需判断没有特殊点的情况。答案不一定直接就是cut(N-1)，比如
+                <blockquote>4 4 1 4 2 4 3
+                </blockquote>
+                这种数据，还得瞎搞一下，不再赘述。
             </p>
-            <p>
-                申请成功后会收到如下的一封邮件。邮件中包含了你的登录账号名、节点号、过期时间等信息，点击网址进入就会有如何连接devcloud、如何上传下载文件、如何提交任务等的详细文档。<br />
-                <span class="image fit"><img src="../images/devcloud_02.jpg"/></span>
-                <span class="image fit"><img src="../images/devcloud_03.jpg"/></span>
-            </p>
-            <p>
-                进入文档的Connect界面，直接往下拉到第4节，在给出的链接中下载并安装putty，然后按照要求填入各项信息即可。注意其中下载的Windows Access Key建议保存在顺手的位置，因为每次打开时都要用到它。<br />
-                <span class="image fit"><img src="../images/devcloud_04.jpg"/></span>
-                完成后双击Coffax Cluster，就可以进入远程终端了。
-                <span class="image fit"><img src="../images/devcloud_05.jpg"/></span>
-                第一次进入的时候会显示这样的一段话，给出了文档、论坛、技术支持的网址，还特别强调了不允许用服务器挖矿（。。。）。
-                <span class="image fit"><img src="../images/devcloud_06.jpg"/></span>
-            </p>
-            <p>
-                进入以后执行
-                <pre class="language-bash"><code>ls</code></pre>
-                可以看到根目录下只有一个文件README.TXT。<br />
-                用文本编辑器打开查看一下，就可以看到关于权限设置、提交任务等的说明。
-                <pre class="language-bash"><code>vim README.TXT</code></pre>
-            </p>
+            <span class="image right"><img src="../images/cf765e.jpg"/></span>
+            <h2>AC代码</h2>
+            <pre class="line-numbers" data-src="../source/cf765e.cpp" style="white-space:pre-swap;"></pre>
         </section>
     </div>
 </div>
